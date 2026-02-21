@@ -10,9 +10,9 @@ namespace simulator {
     using tick_t = int32_t;
 
     enum class Algorithm {
-        FCFS,
-        RR,
-        SJF
+        FCFS, //first come first served
+        RR, //round-robin
+        SJF //shortest job first
     };
 
     enum class StopType {

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/os_arena.dir/src/main.cpp.o CMakeFiles/os_arena.dir/src/simulator/scheduler.cpp.o CMakeFiles/os_arena.dir/src/simulator/metrics.cpp.o CMakeFiles/os_arena.dir/src/simulator/algorithms/fcfs.cpp.o CMakeFiles/os_arena.dir/src/simulator/algorithms/rr.cpp.o -o os_arena 
