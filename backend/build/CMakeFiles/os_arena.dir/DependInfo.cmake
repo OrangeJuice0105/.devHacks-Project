@@ -8,11 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/c/Users/wegom/.devHacks-Project/backend/src/main.cpp" "CMakeFiles/os_arena.dir/src/main.cpp.o" "gcc" "CMakeFiles/os_arena.dir/src/main.cpp.o.d"
-  "/mnt/c/Users/wegom/.devHacks-Project/backend/src/simulator/algorithms/fcfs.cpp" "CMakeFiles/os_arena.dir/src/simulator/algorithms/fcfs.cpp.o" "gcc" "CMakeFiles/os_arena.dir/src/simulator/algorithms/fcfs.cpp.o.d"
-  "/mnt/c/Users/wegom/.devHacks-Project/backend/src/simulator/algorithms/rr.cpp" "CMakeFiles/os_arena.dir/src/simulator/algorithms/rr.cpp.o" "gcc" "CMakeFiles/os_arena.dir/src/simulator/algorithms/rr.cpp.o.d"
-  "/mnt/c/Users/wegom/.devHacks-Project/backend/src/simulator/metrics.cpp" "CMakeFiles/os_arena.dir/src/simulator/metrics.cpp.o" "gcc" "CMakeFiles/os_arena.dir/src/simulator/metrics.cpp.o.d"
-  "/mnt/c/Users/wegom/.devHacks-Project/backend/src/simulator/scheduler.cpp" "CMakeFiles/os_arena.dir/src/simulator/scheduler.cpp.o" "gcc" "CMakeFiles/os_arena.dir/src/simulator/scheduler.cpp.o.d"
+  "C:/Users/wegom/.devHacks-Project/backend/src/main.cpp" "CMakeFiles/os_arena.dir/src/main.cpp.obj" "gcc" "CMakeFiles/os_arena.dir/src/main.cpp.obj.d"
+  "C:/Users/wegom/.devHacks-Project/backend/src/simulator/algorithms/fcfs.cpp" "CMakeFiles/os_arena.dir/src/simulator/algorithms/fcfs.cpp.obj" "gcc" "CMakeFiles/os_arena.dir/src/simulator/algorithms/fcfs.cpp.obj.d"
+  "C:/Users/wegom/.devHacks-Project/backend/src/simulator/algorithms/rr.cpp" "CMakeFiles/os_arena.dir/src/simulator/algorithms/rr.cpp.obj" "gcc" "CMakeFiles/os_arena.dir/src/simulator/algorithms/rr.cpp.obj.d"
+  "C:/Users/wegom/.devHacks-Project/backend/src/simulator/metrics.cpp" "CMakeFiles/os_arena.dir/src/simulator/metrics.cpp.obj" "gcc" "CMakeFiles/os_arena.dir/src/simulator/metrics.cpp.obj.d"
+  "C:/Users/wegom/.devHacks-Project/backend/src/simulator/scheduler.cpp" "CMakeFiles/os_arena.dir/src/simulator/scheduler.cpp.obj" "gcc" "CMakeFiles/os_arena.dir/src/simulator/scheduler.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

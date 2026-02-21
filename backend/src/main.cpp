@@ -5,40 +5,19 @@
 #include "simulator/model.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
-#define HOST_NAME_MAX 40
-
 #ifdef _WIN32
+    #include <winsock2.h>
     #include <Windows.h>
+    #define HOST_NAME_MAX 40
     // Link with Ws2_32.lib if using winsock functions like gethostname on older Windows
     // For GetComputerName, no extra linking is generally needed.
 #else
     #include <unistd.h>
     #include <limits.h> // For HOST_NAME_MAX
 #endif
-
-// A simple function to retrieve the machine name
-std::string getMachineName() {
-    char hostname[HOST_NAME_MAX + 1]; // Use a sufficient buffer size
-    memset(hostname, 0, sizeof(hostname));
-
-#ifdef _WIN32
-    DWORD bufCharCount = sizeof(hostname);
-    if (!GetComputerNameA(hostname, &bufCharCount)) {
-        // Handle error, maybe return a default string
-        return "Unknown_Host";
-    }
-#else
-    if (gethostname(hostname, sizeof(hostname)) == -1) {
-        // Handle error, maybe return a default string
-        perror("gethostname");
-        return "Unknown_Host";
-    }
-#endif
-
-    return std::string(hostname);
-}
 
 using json = nlohmann::json;
 
@@ -61,6 +40,8 @@ static std::string get_reason(simulator::StopType reason) {
 
 int main(int argc, const char *argv[]) {
     httplib::Server application;
+
+    application.set_mount_point("/", "./public");
 
     application.Options(R"(/api/.*)", [](const httplib::Request&, httplib::Response& result) {
         result.set_header("Access-Control-Allow-Origin", "*");
@@ -136,8 +117,20 @@ int main(int argc, const char *argv[]) {
 
     });
 
-    std::cout << "OS Arena backend listening on http://" << getMachineName() << ":8080\n";
-    application.listen(getMachineName(), 8080);
+    application.Get(R"(/(.*))", [](const httplib::Request&, httplib::Response& response) {
+        std::ifstream file("./public/index.html", std::ios::binary);
+        if (!file) { 
+            response.status = 404; 
+            response.set_content("index.html not found", "text/plain");
+        } else {
+            std::string html((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            response.set_content(html, "text/html; charset=utf-8");
+        }   
+    });
+
+    std::cout << "OS Arena backend listening on http://localhost:8080\n";
+    const bool ok = application.listen("127.0.0.1", 8080);
+    std::cerr << "listen() returned " << ok << "\n";
 
     return EXIT_SUCCESS;
 }

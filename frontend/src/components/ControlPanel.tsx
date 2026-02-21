@@ -1,4 +1,3 @@
-import React from "react";
 import type { Algorithm } from "../types";
 
 export default function ControlPanel(props: {

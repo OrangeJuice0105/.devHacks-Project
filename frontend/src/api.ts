@@ -1,6 +1,6 @@
 import type { SimulatorConfiguration, TaskSpecification, SimulatorResponse } from "./types";
 
-const BASE = "http://localhost:8080";
+const BASE = "";
 
 export async function simulate(config: SimulatorConfiguration, tasks: TaskSpecification[]): Promise<SimulatorResponse> {
     const res = await fetch(`${BASE}/api/simulate`, {

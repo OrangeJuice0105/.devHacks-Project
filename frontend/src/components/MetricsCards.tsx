@@ -1,4 +1,3 @@
-import React from "react";
 import type { Metrics } from "../types";
 
 function Card({ title, value }: { title: string; value: string }) {

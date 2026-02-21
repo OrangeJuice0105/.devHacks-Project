@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(os_arena_backend LANGUAGES CXX)
+project(.devHacks-Project LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,4 +20,5 @@ target_include_directories(os_arena PRIVATE
 # Windows: avoid min/max macros causing issues
 if (WIN32)
     target_compile_definitions(os_arena PRIVATE NOMINMAX)
+    target_link_libraries(os_arena PRIVATE ws2_32)
 endif()
