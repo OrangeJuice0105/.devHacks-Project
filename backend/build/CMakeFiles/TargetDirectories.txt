@@ -1,3 +1,0 @@
-C:/Users/wegom/.devHacks-Project/backend/build/CMakeFiles/os_arena.dir
-C:/Users/wegom/.devHacks-Project/backend/build/CMakeFiles/edit_cache.dir
-C:/Users/wegom/.devHacks-Project/backend/build/CMakeFiles/rebuild_cache.dir
