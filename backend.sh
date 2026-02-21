@@ -25,7 +25,7 @@ cmake --build build
 
 cd ..
 
-echo "✅ Bundle complete!"
+echo "Bundle complete!"
 echo ""
 echo "Run the server with:"
 echo "  ./backend/build/os_arena.exe  (Windows)"
