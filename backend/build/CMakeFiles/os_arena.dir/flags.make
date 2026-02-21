@@ -6,5 +6,5 @@ CXX_DEFINES = -DNOMINMAX
 
 CXX_INCLUDES = @CMakeFiles/os_arena.dir/includes_CXX.rsp
 
-CXX_FLAGS = -std=gnu++20
+CXX_FLAGS = -g -std=gnu++20
 

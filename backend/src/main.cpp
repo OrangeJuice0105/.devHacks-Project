@@ -5,19 +5,9 @@
 #include "simulator/model.hpp"
 
 #include <iostream>
+#include <filesystem>
 #include <fstream>
 #include <string>
-
-#ifdef _WIN32
-    #include <winsock2.h>
-    #include <Windows.h>
-    #define HOST_NAME_MAX 40
-    // Link with Ws2_32.lib if using winsock functions like gethostname on older Windows
-    // For GetComputerName, no extra linking is generally needed.
-#else
-    #include <unistd.h>
-    #include <limits.h> // For HOST_NAME_MAX
-#endif
 
 using json = nlohmann::json;
 
@@ -39,9 +29,17 @@ static std::string get_reason(simulator::StopType reason) {
 }
 
 int main(int argc, const char *argv[]) {
+
     httplib::Server application;
 
-    application.set_mount_point("/", "./public");
+    const std::string public_directory = (std::filesystem::current_path() / "public").string();
+    const std::string assets_directory = (std::filesystem::current_path() / "public" / "assets").string();
+
+    
+    if (!application.set_mount_point("/", public_directory)) {
+        std::cerr << "Directory does not exist\n";
+        return EXIT_FAILURE;
+    }
 
     application.Options(R"(/api/.*)", [](const httplib::Request&, httplib::Response& result) {
         result.set_header("Access-Control-Allow-Origin", "*");
@@ -76,12 +74,13 @@ int main(int argc, const char *argv[]) {
             task.priority = json_task.value("priority", 0);
 
             if (json_task.contains("cpuBursts")) {
-                for (auto& x : json_task["cpuBursts"]) {
+                for (json& x : json_task["cpuBursts"]) {
                     task.cpuBursts.push_back(x.get<int>());
                 }
             }
+            
             if (json_task.contains("ioBursts")) {
-                for (auto& x : json_task["ioBursts"]) {
+                for (json& x : json_task["ioBursts"]) {
                     task.ioBursts.push_back(x.get<int>());
                 }
             }
@@ -92,13 +91,13 @@ int main(int argc, const char *argv[]) {
 
         json resp;
         resp["timeline"] = json::array();
-        for (simulator::Slice& s : output.timeline) {
+        for (simulator::Slice& slice : output.timeline) {
             json js;
-            js["cpu"] = s.cpu;
-            js["pid"] = s.pid;
-            js["start"] = s.start;
-            js["end"] = s.end;
-            js["reason"] = get_reason(s.reason);
+            js["cpu"] = slice.cpu;
+            js["pid"] = slice.pid;
+            js["start"] = slice.start;
+            js["end"] = slice.end;
+            js["reason"] = get_reason(slice.reason);
             resp["timeline"].push_back(js);
         }
 
@@ -111,14 +110,14 @@ int main(int argc, const char *argv[]) {
             {"makespan", output.metrics.makespan}
         };
 
-        response.set_content(resp.dump(4), "application/json");
+        response.set_content(resp.dump(2), "application/json");
 
-        
 
     });
 
-    application.Get(R"(/(.*))", [](const httplib::Request&, httplib::Response& response) {
-        std::ifstream file("./public/index.html", std::ios::binary);
+    application.Get("/", [](const httplib::Request& request, httplib::Response& response) {
+        std::cout << "Received request for path: " << request.path << std::endl;
+        std::ifstream file("index.html", std::ios::binary);
         if (!file) { 
             response.status = 404; 
             response.set_content("index.html not found", "text/plain");
@@ -128,7 +127,7 @@ int main(int argc, const char *argv[]) {
         }   
     });
 
-    std::cout << "OS Arena backend listening on http://localhost:8080\n";
+    std::cout << "OS Arena backend listening on address http://localhost:8080\n";
     const bool ok = application.listen("127.0.0.1", 8080);
     std::cerr << "listen() returned " << ok << "\n";
 
